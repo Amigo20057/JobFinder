@@ -1,24 +1,24 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "../../axios";
 import {IFinder, IRecruiter} from "../../types/user.interface.ts";
-import { InitialState } from "../../types/redux.interface.ts";
-import { RootState } from "../store.ts";
+import {InitialState} from "../../types/redux.interface.ts";
+import {RootState} from "../store.ts";
 
 export const fetchFinderRegister = createAsyncThunk(
     "auth/fetchFinderRegister",
     async (params: IFinder) => {
-        const { data } = await axios.post("/auth/finder/register", params);
+        const {data} = await axios.post("/auth/finder/register", params);
         console.log("DATA REGISTER FINDER: ", data);
-        return { user: data.user, token: data.user.token, role: "finder" };
+        return {user: data.user, token: data.user.token, role: "finder"};
     }
 );
 
 export const fetchRecruiterRegister = createAsyncThunk(
     "auth/fetchRecruiter/Register",
     async (params: IRecruiter) => {
-        const { data } = await axios.post("/auth/recruiter/register", params);
+        const {data} = await axios.post("/auth/recruiter/register", params);
         console.log("DATA REGISTER RECRUITER: ", data);
-        return { user: data.user, token: data.user.token, role: "recruiter"};
+        return {user: data.user, token: data.user.token, role: "recruiter"};
     }
 )
 
@@ -63,7 +63,7 @@ const authSlice = createSlice({
             //REGISTER RECRUITER
             .addCase(
                 fetchRecruiterRegister.fulfilled,
-                (state, action: PayloadAction<{user: IRecruiter; token: string; role: string}>) => {
+                (state, action: PayloadAction<{ user: IRecruiter; token: string; role: string }>) => {
                     state.status = "loaded";
                     state.data = action.payload.user;
                     state.token = action.payload.token;
@@ -86,4 +86,4 @@ export const IsAuth = (state: RootState) => {
 
 export const authReducer = authSlice.reducer;
 
-export const { logout } = authSlice.actions;
+export const {logout} = authSlice.actions;
