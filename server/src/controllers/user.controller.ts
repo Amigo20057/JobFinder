@@ -7,11 +7,11 @@ const router = Router();
 const userService = new UserService();
 
 router.get(
-	"/profile-finder",
+	"/finder/profile",
 	AuthCheck,
 	async (req: Request, res: Response) => {
 		try {
-			const userId = req.userId;
+			const userId = req.id;
 			if (!userId) {
 				res.status(400).json({ error: "User ID is missing" });
 				return;
@@ -26,11 +26,11 @@ router.get(
 );
 
 router.get(
-	"/profile-recruiter",
+	"/recruiter/profile",
 	AuthCheck,
 	async (req: Request, res: Response) => {
 		try {
-			const userId = req.userId;
+			const userId = req.id;
 			if (!userId) {
 				res.status(400).json({ error: "User ID is missing" });
 				return;

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "../../axios";
-import {IFinder, IRecruiter, IUserLogin} from "../../types/user.interface.ts";
+import {IFinder, IRecruiter, IUserLogin, IUsers} from "../../types/user.interface.ts";
 import {InitialState} from "../../types/redux.interface.ts";
 import {RootState} from "../store.ts";
 
@@ -14,7 +14,7 @@ export const fetchFinderRegister = createAsyncThunk(
 );
 
 export const fetchRecruiterRegister = createAsyncThunk(
-    "auth/fetchRecruiter/Register",
+    "auth/fetchRecruiterRegister",
     async (params: IRecruiter) => {
         const {data} = await axios.post("/auth/recruiter/register", params);
         console.log("DATA REGISTER RECRUITER: ", data);
@@ -32,13 +32,38 @@ export const fetchFinderLogin = createAsyncThunk(
 );
 
 export const fetchRecruiterLogin = createAsyncThunk(
-    "auth/fetchRecruiter/login",
+    "auth/fetchRecruiterLogin",
     async (params: IUserLogin) => {
         const {data} = await axios.post("/auth/recruiter/login", params);
         console.log("DATA LOGIN RECRUITER", data);
         return {user: data.user, token: data.user.token, role: "recruiter"};
     }
 )
+
+export const fetchFinderProfile = createAsyncThunk(
+    "users/fetchFinderProfile",
+    async () => {
+        const { data } = await axios.get("/users/finder/profile", {
+            headers: {
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`
+            }
+        });
+        return data;
+    }
+);
+
+export const fetchRecruiterProfile = createAsyncThunk(
+    "users/fetchRecruiterProfile",
+    async () => {
+        const { data } = await axios.get("/users/recruiter/profile", {
+            headers: {
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`
+            }
+        });
+        return data;
+    }
+);
+
 
 const initialState: InitialState = {
     data: null,
@@ -128,6 +153,24 @@ const authSlice = createSlice({
                 state.status = "error";
                 state.data = null;
             })
+
+            //PROFILE FINDER
+            .addCase(
+                fetchFinderProfile.fulfilled,
+                (state, action: PayloadAction<IUsers>) => {
+                    state.status = "loaded";
+                    state.data = action.payload;
+                }
+            )
+
+            // PROFILE RECRUITER
+            .addCase(
+                fetchRecruiterProfile.fulfilled,
+                (state, action: PayloadAction<IUsers>) => {
+                    state.status = "loaded";
+                    state.data = action.payload;
+                }
+            )
 
     },
 });
