@@ -73,11 +73,11 @@ export const RecruiterRegister = () => {
             />
             <button type="submit">Зареєструватися</button>
           </form>
-          <Link to="/auth/finder/login">
+          <Link to="/auth/recruiter/login">
             <BriefcaseBusiness style={{ marginRight: "10px" }} />
             Увійти як роботодавець
           </Link>
-          <Link to="/auth/recruiter/login" style={{ marginTop: "20px" }}>
+          <Link to="/auth/finder/login" style={{ marginTop: "20px" }}>
             <CircleUserRound style={{ marginRight: "10px" }} />
             Увійти як шукач
           </Link>

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "../../axios";
-import {IFinder, IRecruiter} from "../../types/user.interface.ts";
+import {IFinder, IRecruiter, IUserLogin} from "../../types/user.interface.ts";
 import {InitialState} from "../../types/redux.interface.ts";
 import {RootState} from "../store.ts";
 
@@ -18,6 +18,24 @@ export const fetchRecruiterRegister = createAsyncThunk(
     async (params: IRecruiter) => {
         const {data} = await axios.post("/auth/recruiter/register", params);
         console.log("DATA REGISTER RECRUITER: ", data);
+        return {user: data.user, token: data.user.token, role: "recruiter"};
+    }
+)
+
+export const fetchFinderLogin = createAsyncThunk(
+    "auth/fetchFinderLogin",
+    async (params: IUserLogin) => {
+        const {data} = await axios.post("/auth/finder/login", params);
+        console.log("DATA LOGIN FINDER: ", data);
+        return {user: data.user, token: data.user.token, role: "finder"};
+    }
+);
+
+export const fetchRecruiterLogin = createAsyncThunk(
+    "auth/fetchRecruiter/login",
+    async (params: IUserLogin) => {
+        const {data} = await axios.post("/auth/recruiter/login", params);
+        console.log("DATA LOGIN RECRUITER", data);
         return {user: data.user, token: data.user.token, role: "recruiter"};
     }
 )
@@ -73,6 +91,40 @@ const authSlice = createSlice({
                 }
             )
             .addCase(fetchRecruiterRegister.rejected, (state) => {
+                state.status = "error";
+                state.data = null;
+            })
+
+            //LOGIN FINDER
+            .addCase(
+                fetchFinderLogin.fulfilled,
+                (state, action: PayloadAction<{ user: IFinder; token: string; role: string }>) => {
+                    state.status = "loaded";
+                    state.data = action.payload.user;
+                    state.token = action.payload.token;
+                    state.role = action.payload.role;
+                    localStorage.setItem("token", action.payload.token);
+                    localStorage.setItem("role", action.payload.role);
+                }
+            )
+            .addCase(fetchFinderLogin.rejected, (state) => {
+                state.status = "error";
+                state.data = null;
+            })
+
+            //REGISTER RECRUITER
+            .addCase(
+                fetchRecruiterLogin.fulfilled,
+                (state, action: PayloadAction<{ user: IRecruiter; token: string; role: string }>) => {
+                    state.status = "loaded";
+                    state.data = action.payload.user;
+                    state.token = action.payload.token;
+                    state.role = action.payload.role;
+                    localStorage.setItem("token", action.payload.token);
+                    localStorage.setItem("role", action.payload.role);
+                }
+            )
+            .addCase(fetchRecruiterLogin.rejected, (state) => {
                 state.status = "error";
                 state.data = null;
             })

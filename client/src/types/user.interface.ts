@@ -15,3 +15,8 @@ export interface IFinder {
     email: string;
     password: string;
 }
+
+export interface IUserLogin {
+    email: string;
+    password: string;
+}
