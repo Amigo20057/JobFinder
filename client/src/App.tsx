@@ -4,9 +4,14 @@ import {Home, FinderRegister, FinderLogin} from "./pages";
 import {RecruiterRegister} from "./pages/auth/register/RecruiterRegister.tsx";
 import {NotFound} from "./NotFound.tsx";
 import {RecruiterLogin} from "./pages/auth/login/RecruiterLogin.tsx";
+import {useUserProfile} from "./hooks/useUserProfile.tsx";
 
 function App() {
     const location = useLocation();
+    const {user, isAuth} = useUserProfile();
+
+    console.log("IS AUTH: ", isAuth);
+    console.log("USER: ", user);
 
     const noHeaderRoutes = [
         "/auth/finder/register",
@@ -18,9 +23,9 @@ function App() {
 
     return (
         <>
-            {showHeader && <Header/>}
+            {showHeader && <Header userName={user?.user_name} userSurname={user?.user_surname}/>}
             <Routes>
-                <Route path="/" element={<Home/>}/>
+                <Route path="/" element={<Home user={user}/>}/>
                 <Route path="/auth/finder/register" element={<FinderRegister/>}/>
                 <Route
                     path="/auth/recruiter/register"
