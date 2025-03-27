@@ -20,7 +20,7 @@ export const Header = ({userName, userSurname}: Props) => {
     return (
         <div className={styles.header}>
             <div className={styles.topHeader}>
-                <div className={styles.logo}>
+                <div className={styles.logo} onClick={() => window.location.reload()}>
                     <h1>JobFinder</h1>
                 </div>
                 <div className={styles.rightBlock}>

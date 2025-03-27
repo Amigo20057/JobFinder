@@ -5,6 +5,7 @@ import {RecruiterRegister} from "./pages/auth/register/RecruiterRegister.tsx";
 import {NotFound} from "./NotFound.tsx";
 import {RecruiterLogin} from "./pages/auth/login/RecruiterLogin.tsx";
 import {useUserProfile} from "./hooks/useUserProfile.tsx";
+import {FullPost} from "./components/post/FullPost.tsx";
 
 function App() {
     const location = useLocation();
@@ -25,7 +26,9 @@ function App() {
         <>
             {showHeader && <Header userName={user?.user_name} userSurname={user?.user_surname}/>}
             <Routes>
-                <Route path="/" element={<Home user={user}/>}/>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/posts/:id" element={<FullPost/>}/>
+
                 <Route path="/auth/finder/register" element={<FinderRegister/>}/>
                 <Route
                     path="/auth/recruiter/register"
