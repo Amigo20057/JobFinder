@@ -97,4 +97,27 @@ export class PostService {
             [id]
         );
     }
+
+    public async savePost(finderId: number, postId: number) {
+        return await this.pool.query(
+            `INSERT INTO public.posts(finder_id, post_id)
+             VALUES ($1, $2) RETURNING *`,
+            [finderId, postId],
+        );
+    }
+
+    public async findSavedPosts(userId: number) {
+        return await this.pool.query(
+            `SELECT public.posts.*,
+                    public.recruiters.name_company,
+                    public.recruiters.address_company
+             FROM public.posts
+                      JOIN public.saved_posts
+                           ON public.saved_posts.post_id = public.posts.id
+                      JOIN public.recruiters
+                           ON public.posts.recruiter_id = public.recruiters.id
+             WHERE public.saved_posts.finder_id = $1`,
+            [userId],
+        );
+    }
 }

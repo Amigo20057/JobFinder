@@ -116,4 +116,27 @@ router.get("/post-with-recruiter/:id", async (req: Request, res: Response) => {
     }
 })
 
+router.post("/save-post/:id", AuthCheck, async (req: Request, res: Response) => {
+    try {
+        const finderId = req.userId;
+        const postId = parseInt(req.params.id);
+        const post = await postService.savePost(finderId!, postId);
+        res.status(200).json(post.rows[0]);
+    } catch (error: any) {
+        logger.error(error.message);
+        res.status(500).json({error: error.message});
+    }
+})
+
+router.get("/saved-posts", AuthCheck, async (req: Request, res: Response) => {
+    try {
+        const userId = req.userId;
+        const posts = await postService.findSavedPosts(userId!);
+        res.status(200).json(posts.rows);
+    } catch (error: any) {
+        logger.error(error.message);
+        res.status(500).json({error: error.message});
+    }
+})
+
 export const PostRouter = router;
