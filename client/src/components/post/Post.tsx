@@ -32,7 +32,7 @@ export const Post = ({
 
     return (
         <>
-            {isFullPost ?
+            {!isFullPost ?
                 <div className={styles.post}>
                     <h1 className={styles.title} onClick={() => window.location.pathname = `/posts/${id}`}>{title}</h1>
                     <p className={styles.workFormat}><span

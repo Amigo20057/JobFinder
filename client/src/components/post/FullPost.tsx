@@ -42,7 +42,7 @@ export const FullPost = () => {
                 language={post.language}
                 tags={post.tags}
                 createdAt={post.created_at}
-                isFullPost={false}
+                isFullPost={true}
             />
         </div>
     );

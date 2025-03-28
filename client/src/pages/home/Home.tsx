@@ -24,7 +24,7 @@ export const Home = () => {
                           workFormat={(post as IPostWithRecruiter).work_format}
                           experience={post.experience} language={post.language} tags={post.tags}
                           createdAt={post.created_at} nameCompany={(post as IPostWithRecruiter).name_company}
-                          isFullPost={true}/>
+                          isFullPost={false}/>
                 ))
             ) : (
                 <p>error</p>
