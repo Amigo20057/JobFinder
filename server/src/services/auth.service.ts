@@ -15,33 +15,38 @@ export class AuthService {
 		private readonly config: ConfigService
 	) {}
 
-	private async hashPassword(password: string):Promise<string> {
+	private async hashPassword(password: string): Promise<string> {
 		const salt = bcrypt.genSaltSync(10);
-		return bcrypt.hashSync(password, salt)
+		return bcrypt.hashSync(password, salt);
 	}
 
-	private tokenGenerate(id:number, email:string):string{
+	private tokenGenerate(id: number, email: string): string {
 		return jwt.sign(
 			{
 				id: id,
-				email: email
+				email: email,
 			},
 			this.config.get<string>("SECRET"),
 			{
-				expiresIn: "30d"
+				expiresIn: "30d",
 			}
-		)
+		);
 	}
 
 	public async registerFinder(dto: IRegister) {
 		const finderExists = await this.userService.findFinderByEmail(dto.email);
-		const recruiterExists = await this.userService.findRecruiterByEmail(dto.email);
+		const recruiterExists = await this.userService.findRecruiterByEmail(
+			dto.email
+		);
 		if (finderExists.rowCount! > 0 || recruiterExists.rowCount! > 0) {
 			throw new Error("User already exists");
 		}
 		dto.password = await this.hashPassword(dto.password);
 		const userResult = await this.userService.createFinder(dto);
-		const token = this.tokenGenerate(userResult.rows[0].id, userResult.rows[0].email)
+		const token = this.tokenGenerate(
+			userResult.rows[0].id,
+			userResult.rows[0].email
+		);
 		const user = userResult.rows[0];
 		return {
 			...user,
@@ -50,14 +55,19 @@ export class AuthService {
 	}
 
 	public async registerRecruiter(dto: IRegister) {
-		const recruiterExists = await this.userService.findRecruiterByEmail(dto.email);
+		const recruiterExists = await this.userService.findRecruiterByEmail(
+			dto.email
+		);
 		const finderExists = await this.userService.findFinderByEmail(dto.email);
 		if (recruiterExists.rowCount! > 0 || finderExists.rowCount! > 0) {
 			throw new Error("User already exists");
 		}
 		dto.password = await this.hashPassword(dto.password);
 		const userResult = await this.userService.createRecruiter(dto);
-		const token = this.tokenGenerate(userResult.rows[0].id, userResult.rows[0].email)
+		const token = this.tokenGenerate(
+			userResult.rows[0].id,
+			userResult.rows[0].email
+		);
 		const user = userResult.rows[0];
 		return {
 			...user,
@@ -83,7 +93,9 @@ export class AuthService {
 	}
 
 	public async loginRecruiter(dto: ILogin) {
-		const recruiterExists = await this.userService.findRecruiterByEmail(dto.email);
+		const recruiterExists = await this.userService.findRecruiterByEmail(
+			dto.email
+		);
 		if (recruiterExists.rowCount === 0) {
 			throw new Error("User not exists");
 		}

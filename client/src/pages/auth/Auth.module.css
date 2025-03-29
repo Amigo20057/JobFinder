@@ -1,66 +1,66 @@
 .authPage {
-    width: 100%;
-    height: 100vh;
-    background-color: #f4f5f6;
-    display: flex;
-    justify-content: center;
+	width: 100%;
+	height: 100vh;
+	background-color: #f4f5f6;
+	display: flex;
+	justify-content: center;
 }
 
 .authPage .container {
-    width: 380px;
-    padding-top: 150px;
+	width: 380px;
+	padding-top: 150px;
 }
 
 .authPage .container h1 {
-    text-align: center;
-    font-size: 36px;
+	text-align: center;
+	font-size: 36px;
 }
 
 .authPage form {
-    box-shadow: 0 5px 5px 0 rgba(31, 44, 71, 0.05);
-    background-color: #fff;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 30px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
+	box-shadow: 0 5px 5px 0 rgba(31, 44, 71, 0.05);
+	background-color: #fff;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 30px;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
 }
 
 .authPage form input {
-    padding: 8px 15px;
-    margin-bottom: 20px;
-    height: 50px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 18px;
-    outline: none;
-    color: #1f2c47;
-    border: 1px solid #adb8cc;
+	padding: 8px 15px;
+	margin-bottom: 20px;
+	height: 50px;
+	width: 100%;
+	border-radius: 10px;
+	font-size: 18px;
+	outline: none;
+	color: #1f2c47;
+	border: 1px solid #adb8cc;
 }
 
 .authPage form input:hover {
-    border-color: #737b8c;
+	border-color: #737b8c;
 }
 
 .authPage form button {
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    background-color: #0098e5;
-    color: #fff;
-    font-size: 18px;
-    transition: 0.25s;
+	height: 50px;
+	border-radius: 10px;
+	border: none;
+	background-color: #0098e5;
+	color: #fff;
+	font-size: 18px;
+	transition: 0.25s;
 }
 
 .authPage form button:hover {
-    background-color: #0087cc;
+	background-color: #0087cc;
 }
 
 .authPage .container a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    font-size: 17px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+	font-size: 17px;
 }

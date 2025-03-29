@@ -12,9 +12,10 @@ export class UserService {
 	}
 
 	public async findRecruiterById(id: number) {
-		return await this.pool.query("SELECT * FROM public.recruiters WHERE id = $1", [
-			id,
-		]);
+		return await this.pool.query(
+			"SELECT * FROM public.recruiters WHERE id = $1",
+			[id]
+		);
 	}
 
 	public async findFinderByEmail(email: string) {
@@ -45,15 +46,10 @@ export class UserService {
 		);
 	}
 
-	public async createFinder(dto:IRegister){
+	public async createFinder(dto: IRegister) {
 		return await this.pool.query(
 			"INSERT INTO public.finders(user_name, user_surname, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
-			[
-				dto.userName,
-				dto.userSurname,
-				dto.email,
-				dto.password
-			]
-		)
+			[dto.userName, dto.userSurname, dto.email, dto.password]
+		);
 	}
 }

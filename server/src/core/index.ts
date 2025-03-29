@@ -1,4 +1,5 @@
 import compression from "compression";
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import { ConfigService } from "../config/config.service";
@@ -6,7 +7,6 @@ import { AuthRouter } from "../controllers/auth.controller";
 import { PostRouter } from "../controllers/post.controller";
 import { UserRouter } from "../controllers/user.controller";
 import { logger } from "../utils/log";
-import cors from "cors";
 
 export class Application {
 	private app: express.Application;

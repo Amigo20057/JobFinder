@@ -1,82 +1,88 @@
 .post {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 0 auto;
-    width: 740px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 5px 5px 0 rgba(31, 44, 71, .05);
-    transition: box-shadow .1s ease-out;
-    margin-bottom: 50px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 0 auto;
+	width: 740px;
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 20px;
+	box-shadow: 0 5px 5px 0 rgba(31, 44, 71, 0.05);
+	transition: box-shadow 0.1s ease-out;
+	margin-bottom: 50px;
 }
 
 .post:hover {
-    cursor: pointer;
-    box-shadow: 0 7px 10px 0 rgba(31, 44, 71, .1), 0 5px 5px 3px rgba(31, 44, 71, .05);
+	cursor: pointer;
+	box-shadow: 0 7px 10px 0 rgba(31, 44, 71, 0.1),
+		0 5px 5px 3px rgba(31, 44, 71, 0.05);
 }
 
-
 .post .title {
-    margin-bottom: 25px;
-    color: #737b8c;
-    font-size: 35px;
-    line-height: 40px;
+	margin-bottom: 25px;
+	color: #737b8c;
+	font-size: 35px;
+	line-height: 40px;
 }
 
 .post:hover .title {
-    text-decoration-line: underline;
-    text-underline-offset: 1.5px;
-    text-underline-position: under;
-    text-decoration-thickness: .5px;
+	text-decoration-line: underline;
+	text-underline-offset: 1.5px;
+	text-underline-position: under;
+	text-decoration-thickness: 0.5px;
 }
 
 .post .workFormat {
-    font-size: 18px;
-    color: #1f2c47;
-    margin-bottom: 25px;
+	font-size: 18px;
+	color: #1f2c47;
+	margin-bottom: 25px;
 }
 
 .post .description {
-    margin-bottom: 25px;
-    -webkit-line-clamp: 3;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: rgba(31, 44, 71, .7) !important;
-    word-wrap: break-word;
-    font-size: 18px;
+	margin-bottom: 25px;
+	-webkit-line-clamp: 3;
+	white-space: normal;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: rgba(31, 44, 71, 0.7) !important;
+	word-wrap: break-word;
+	font-size: 18px;
 }
 
 .post .options {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .post .options p {
-    color: rgba(31, 44, 71, .7);
-    font-size: 18px;
+	color: rgba(31, 44, 71, 0.7);
+	font-size: 18px;
 }
 
 .post .options button {
-    padding: 7px 10px;
-    align-items: center;
-    display: inline-flex;
-    justify-content: center;
-    color: #1f2c47;
-    border-color: transparent;
-    background-color: transparent;
-    transition: all .15s;
-    text-decoration: none;
-    font-size: 18px;
-    border-radius: 10px;
-    font-weight: 500;
+	padding: 7px 10px;
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
+	color: #1f2c47;
+	border-color: transparent;
+	background-color: transparent;
+	transition: all 0.15s;
+	text-decoration: none;
+	font-size: 18px;
+	border-radius: 10px;
+	font-weight: 500;
 }
 
 .post .options button:hover {
-    background-color: rgba(31, 44, 71, .07);
+	background-color: rgba(31, 44, 71, 0.07);
+}
+
+.fullPost {
+	margin: 0 auto;
+	width: 730px;
+	background-color: #fff;
 }
