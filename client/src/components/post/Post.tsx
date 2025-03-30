@@ -8,6 +8,10 @@ import {
 	Heart,
 	MapPin,
 } from "lucide-react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { savePost } from "../../redux/slices/posts";
+import { AppDispatch } from "../../redux/store";
 import styles from "./Post.module.css";
 
 type Props = {
@@ -39,6 +43,17 @@ export const Post = ({
 }: Props) => {
 	const userRole = window.localStorage.getItem("role");
 	const formattedTags = tags.replace(/[{}]/g, "").split(",");
+	const dispatch: AppDispatch = useDispatch<AppDispatch>();
+	const [savePostLocal, setSavePostLocal] = useState<boolean>(isSaved);
+
+	const savePostHandler = async () => {
+		try {
+			await dispatch(savePost(id));
+			setSavePostLocal(prev => !prev);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const displayTags = () => {
 		return (
@@ -73,29 +88,17 @@ export const Post = ({
 							тому
 						</p>
 						{userRole === "finder" && (
-							<button>
+							<button onClick={savePostHandler}>
 								<Heart
 									style={{
-										color: isSaved ? "#ff0033" : "black",
-										fill: isSaved ? "#ff0033" : "none",
+										color: savePostLocal ? "#ff0033" : "black",
+										fill: savePostLocal ? "#ff0033" : "none",
 									}}
 								/>
-								{!isSaved ? (
-									<span
-										style={{
-											marginLeft: "25px",
-										}}
-									>
-										Зберегти
-									</span>
+								{!savePostLocal ? (
+									<span style={{ marginLeft: "25px" }}>Зберегти</span>
 								) : (
-									<span
-										style={{
-											marginLeft: "10px",
-										}}
-									>
-										Збережено
-									</span>
+									<span style={{ marginLeft: "10px" }}>Збережено</span>
 								)}
 							</button>
 						)}
@@ -105,29 +108,17 @@ export const Post = ({
 				<div className={styles.fullPost}>
 					<div className={styles.options}>
 						<button className={styles.respond}>Відгукнутися</button>
-						<button>
+						<button onClick={savePostHandler}>
 							<Heart
 								style={{
-									color: isSaved ? "#ff0033" : "black",
-									fill: isSaved ? "#ff0033" : "none",
+									color: savePostLocal ? "#ff0033" : "black",
+									fill: savePostLocal ? "#ff0033" : "none",
 								}}
 							/>
-							{!isSaved ? (
-								<span
-									style={{
-										marginLeft: "25px",
-									}}
-								>
-									Зберегти
-								</span>
+							{!savePostLocal ? (
+								<span style={{ marginLeft: "25px" }}>Зберегти</span>
 							) : (
-								<span
-									style={{
-										marginLeft: "10px",
-									}}
-								>
-									Збережено
-								</span>
+								<span style={{ marginLeft: "10px" }}>Збережено</span>
 							)}
 						</button>
 					</div>

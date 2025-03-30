@@ -36,6 +36,17 @@ export const createPost = createAsyncThunk(
 	}
 );
 
+export const savePost = createAsyncThunk(
+	"post/savePost",
+	async (postId: number) => {
+		await axios.post(`/posts/save-post/${postId}`, {
+			headers: {
+				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+			},
+		});
+	}
+);
+
 const initialState: InitialStatePosts = {
 	posts: {
 		items: [],
@@ -84,6 +95,10 @@ const postsSlice = createSlice({
 			.addCase(fetchPostsWithRecruiter.rejected, state => {
 				state.posts.items = [];
 				state.posts.status = "error";
+			})
+
+			.addCase(savePost.fulfilled, (state, action) => {
+				state.posts.status = "loaded";
 			});
 	},
 });

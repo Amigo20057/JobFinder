@@ -152,7 +152,6 @@ router.get(
 	async (req: Request, res: Response) => {
 		try {
 			const userId = req.id;
-			console.log(req);
 			const post = await postService.findPostWithRecruiterById(
 				parseInt(req.params.id),
 				userId
@@ -170,13 +169,14 @@ router.get(
 	}
 );
 
+//SAVE POST
 router.post(
-	"/save-post/:id",
+	"/save-post/:postId",
 	AuthCheck,
 	async (req: Request, res: Response) => {
 		try {
 			const finderId = req.id;
-			const postId = parseInt(req.params.id);
+			const postId = parseInt(req.params.postId);
 			const post = await postService.savePost(finderId!, postId);
 			res.status(200).json(post.rows[0]);
 		} catch (error: unknown) {
@@ -191,6 +191,7 @@ router.post(
 	}
 );
 
+//GET SAVED POSTS
 router.get("/saved-posts", AuthCheck, async (req: Request, res: Response) => {
 	try {
 		const userId = req.id;
@@ -206,5 +207,15 @@ router.get("/saved-posts", AuthCheck, async (req: Request, res: Response) => {
 		}
 	}
 });
+
+router.delete(
+	"/remove/saved-post/:postId",
+	AuthCheck,
+	async (req: Request, res: Response) => {
+		const userId = req.id;
+		const postId = parseInt(req.params.postId);
+		await postService.removeSavedPost(userId!, postId);
+	}
+);
 
 export const PostRouter = router;

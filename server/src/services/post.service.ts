@@ -110,9 +110,6 @@ export class PostService {
 		id: number,
 		userId: number | null | undefined
 	) {
-		console.log("USER ID: ", userId);
-		console.log("POST ID: ", id);
-
 		return await this.pool.query(
 			`SELECT posts.*, 
 					recruiters.address_company, 
@@ -128,7 +125,7 @@ export class PostService {
 
 	public async savePost(finderId: number, postId: number) {
 		return await this.pool.query(
-			`INSERT INTO public.posts(finder_id, post_id)
+			`INSERT INTO public.saved_posts(finder_id, post_id)
              VALUES ($1, $2) RETURNING *`,
 			[finderId, postId]
 		);
@@ -146,6 +143,13 @@ export class PostService {
                            ON public.posts.recruiter_id = public.recruiters.id
              WHERE public.saved_posts.finder_id = $1`,
 			[userId]
+		);
+	}
+
+	public async removeSavedPost(userId: number, postId: number) {
+		await this.pool.query(
+			"DELETE FROM public.saved_posts WHERE public.saved_posts.finder_id = $1 AND public.saved_posts.post_id = $2",
+			[userId, postId]
 		);
 	}
 }
