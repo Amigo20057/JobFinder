@@ -11,6 +11,7 @@ export const AuthCheck = (
 	next: NextFunction
 ): void => {
 	const token = (req.headers.authorization || "").replace(/Bearer\s?/, "");
+
 	if (token) {
 		try {
 			const decoded = jwt.verify(
@@ -19,11 +20,12 @@ export const AuthCheck = (
 			) as DecodedToken;
 			req.id = decoded.id;
 			req.email = decoded.email;
-			next();
 		} catch (error) {
 			res.status(403).json({ message: "No access" });
+			return;
 		}
-	} else {
-		res.status(401).json({ message: "No token provided" });
 	}
+
+	// Если токен отсутствует, пропускаем мидлвар
+	next();
 };

@@ -21,7 +21,7 @@
 
 .post .title {
 	margin-bottom: 25px;
-	color: #737b8c;
+	color: #1f2c47;
 	font-size: 35px;
 	line-height: 40px;
 }
@@ -62,7 +62,9 @@
 	font-size: 18px;
 }
 
-.post .options button {
+.post .options button,
+.fullPost .options button,
+.fullPost .respond {
 	padding: 7px 10px;
 	align-items: center;
 	display: inline-flex;
@@ -77,12 +79,87 @@
 	font-weight: 500;
 }
 
-.post .options button:hover {
+.post .options button:hover,
+.fullPost .options button:hover {
 	background-color: rgba(31, 44, 71, 0.07);
 }
 
 .fullPost {
 	margin: 0 auto;
-	width: 730px;
+	margin-bottom: 50px;
+	padding: 20px;
+	border-radius: 20px;
+	width: 800px;
 	background-color: #fff;
+}
+
+.fullPost .options {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.fullPost .options button:first-child,
+.fullPost .respond {
+	background-color: #0098e5;
+	margin-right: 20px;
+	color: #fff;
+}
+
+.fullPost .options button:first-child:hover,
+.fullPost .respond:hover {
+	background-color: #0087cc;
+}
+
+.fullPost .createdAt {
+	font-size: 18px;
+	color: rgba(31, 44, 71, 0.7);
+	margin-bottom: 15px;
+}
+
+.fullPost .title {
+	max-width: 70%;
+	font-size: 36px;
+	line-height: 44px;
+	margin-bottom: 30px;
+}
+
+.fullPost .price,
+.fullPost .nameCompany,
+.fullPost .workFormat,
+.fullPost .experience,
+.fullPost .language {
+	font-weight: 500;
+	color: #1f2c47;
+	font-size: 18px;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.fullPost .tags {
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.fullPost .tags p {
+	margin-top: 20px;
+	line-height: 22px;
+	padding: 5px 15px;
+	font-size: 15px;
+	max-width: 100%;
+	font-weight: 400;
+	border-radius: 20px;
+	align-items: center;
+	display: inline-flex;
+	color: #1f2c47 !important;
+	background-color: #f0f1f5;
+	margin-right: 15px;
+}
+
+.fullPost .description {
+	color: #1f2c47;
+	font-size: 18px;
+	margin-top: 20px;
+	margin-bottom: 30px;
 }

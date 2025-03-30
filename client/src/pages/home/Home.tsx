@@ -28,6 +28,7 @@ export const Home = () => {
 						experience={post.experience}
 						language={post.language}
 						tags={post.tags}
+						isSaved={post.isSaved}
 						createdAt={post.created_at}
 						nameCompany={(post as IPostWithRecruiter).name_company}
 						isFullPost={false}

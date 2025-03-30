@@ -5,6 +5,7 @@ import { NotFound } from "./NotFound.tsx";
 import { FinderLogin, FinderRegister, Home } from "./pages";
 import { RecruiterLogin } from "./pages/auth/login/RecruiterLogin.tsx";
 import { RecruiterRegister } from "./pages/auth/register/RecruiterRegister.tsx";
+import { CreatePost } from "./pages/createPost/CreatePost.tsx";
 import { FullPost } from "./pages/fullPost/FullPost.tsx";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Home />} />
 				<Route path='/posts/:id' element={<FullPost />} />
+				<Route path='/post/create' element={<CreatePost />} />
 
 				<Route path='/auth/finder/register' element={<FinderRegister />} />
 				<Route

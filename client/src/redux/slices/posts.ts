@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios";
+import { IPost } from "../../types/post.interface.ts";
 import { InitialStatePosts } from "../../types/redux.interface.ts";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
@@ -22,6 +23,15 @@ export const fetchPostsWithRecruiter = createAsyncThunk(
 	async () => {
 		const { data } = await axios.get("/posts/posts-with-recruiter");
 		console.log("DATA FETCH POST WITH RECRUITER", data);
+		return data;
+	}
+);
+
+export const createPost = createAsyncThunk(
+	"posts/createPost",
+	async (params: IPost) => {
+		const { data } = await axios.post("/posts/create", params);
+		console.log("DATA CREATED POST", data);
 		return data;
 	}
 );

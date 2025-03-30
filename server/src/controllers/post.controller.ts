@@ -10,9 +10,10 @@ const router = Router();
 const userService = new UserService();
 const postService = new PostService(userService);
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", AuthCheck, async (req: Request, res: Response) => {
 	try {
-		const posts = await postService.findAllPosts();
+		const userId = req.id;
+		const posts = await postService.findAllPosts(userId);
 		res.status(200).json(posts.rows);
 	} catch (error: unknown) {
 		if (error instanceof Error) {
@@ -126,44 +127,55 @@ router.delete("/:id", AuthCheck, async (req: Request, res: Response) => {
 	}
 });
 
-router.get("/posts-with-recruiter", async (req: Request, res: Response) => {
-	try {
-		const posts = await postService.findPostsWithRecruiter();
-		res.status(200).json(posts.rows);
-	} catch (error: unknown) {
-		if (error instanceof Error) {
-			logger.error(error.message);
-			res.status(500).json({ error: error.message });
-		} else {
-			logger.error("An unknown error occurred");
-			res.status(500).json({ error: "Internal Server Error" });
+router.get(
+	"/posts-with-recruiter",
+	AuthCheck,
+	async (req: Request, res: Response) => {
+		try {
+			const posts = await postService.findPostsWithRecruiter(req.id);
+			res.status(200).json(posts.rows);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				logger.error(error.message);
+				res.status(500).json({ error: error.message });
+			} else {
+				logger.error("An unknown error occurred");
+				res.status(500).json({ error: "Internal Server Error" });
+			}
 		}
 	}
-});
+);
 
-router.get("/post-with-recruiter/:id", async (req: Request, res: Response) => {
-	try {
-		const post = await postService.findPostWithRecruiterById(
-			parseInt(req.params.id)
-		);
-		res.status(200).json(post.rows[0]);
-	} catch (error: unknown) {
-		if (error instanceof Error) {
-			logger.error(error.message);
-			res.status(500).json({ error: error.message });
-		} else {
-			logger.error("An unknown error occurred");
-			res.status(500).json({ error: "Internal Server Error" });
+router.get(
+	"/post-with-recruiter/:id",
+	AuthCheck,
+	async (req: Request, res: Response) => {
+		try {
+			const userId = req.id;
+			console.log(req);
+			const post = await postService.findPostWithRecruiterById(
+				parseInt(req.params.id),
+				userId
+			);
+			res.status(200).json(post.rows[0]);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				logger.error(error.message);
+				res.status(500).json({ error: error.message });
+			} else {
+				logger.error("An unknown error occurred");
+				res.status(500).json({ error: "Internal Server Error" });
+			}
 		}
 	}
-});
+);
 
 router.post(
 	"/save-post/:id",
 	AuthCheck,
 	async (req: Request, res: Response) => {
 		try {
-			const finderId = req.userId;
+			const finderId = req.id;
 			const postId = parseInt(req.params.id);
 			const post = await postService.savePost(finderId!, postId);
 			res.status(200).json(post.rows[0]);
@@ -181,7 +193,7 @@ router.post(
 
 router.get("/saved-posts", AuthCheck, async (req: Request, res: Response) => {
 	try {
-		const userId = req.userId;
+		const userId = req.id;
 		const posts = await postService.findSavedPosts(userId!);
 		res.status(200).json(posts.rows);
 	} catch (error: unknown) {

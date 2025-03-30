@@ -4,7 +4,8 @@ export interface IPost {
 	description: string;
 	experience: string;
 	language: string;
-	tags: string[];
+	tags: string;
+	isSaved: boolean;
 	created_at: string;
 	recruiter_id: number;
 }

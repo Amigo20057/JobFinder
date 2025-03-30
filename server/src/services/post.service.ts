@@ -8,8 +8,14 @@ export class PostService {
 
 	public constructor(private readonly userService: UserService) {}
 
-	public async findAllPosts() {
-		return await this.pool.query("SELECT * FROM public.posts");
+	public async findAllPosts(userId: number | null | undefined) {
+		return await this.pool.query(
+			`SELECT p.*, 
+					CASE WHEN sp.post_id IS NOT NULL THEN true ELSE false END AS "isSaved"
+			 FROM public.posts p
+			 LEFT JOIN saved_posts sp ON sp.post_id = p.id AND sp.user_id = $1`,
+			[userId]
+		);
 	}
 
 	public async findPostById(id: number) {
@@ -86,22 +92,37 @@ export class PostService {
 		]);
 	}
 
-	public async findPostsWithRecruiter() {
+	public async findPostsWithRecruiter(userId: number | null | undefined) {
 		return await this.pool.query(
-			`SELECT posts.*, recruiters.address_company, recruiters.name_company
-             FROM public.posts
-                      JOIN public.recruiters ON recruiters.id = posts.recruiter_id
-             ORDER BY posts.created_at DESC`
+			`SELECT posts.*, 
+					recruiters.address_company, 
+					recruiters.name_company, 
+					CASE WHEN sp.finder_id IS NOT NULL THEN true ELSE false END AS "isSaved"
+			 FROM public.posts
+			 JOIN public.recruiters ON recruiters.id = posts.recruiter_id
+			 LEFT JOIN saved_posts sp ON sp.post_id = posts.id AND sp.finder_id = $1
+			 ORDER BY posts.created_at DESC`,
+			[userId]
 		);
 	}
 
-	public async findPostWithRecruiterById(id: number) {
+	public async findPostWithRecruiterById(
+		id: number,
+		userId: number | null | undefined
+	) {
+		console.log("USER ID: ", userId);
+		console.log("POST ID: ", id);
+
 		return await this.pool.query(
-			`SELECT posts.*, recruiters.address_company, recruiters.name_company
-             FROM public.posts
-                      JOIN public.recruiters ON recruiters.id = posts.recruiter_id
-             WHERE posts.id = $1`,
-			[id]
+			`SELECT posts.*, 
+					recruiters.address_company, 
+					recruiters.name_company, 
+					CASE WHEN sp.post_id IS NOT NULL THEN true ELSE false END AS "isSaved"
+			 FROM public.posts
+			 JOIN public.recruiters ON recruiters.id = posts.recruiter_id
+			 LEFT JOIN saved_posts sp ON sp.post_id = posts.id AND sp.finder_id = $1
+			 WHERE posts.id = $2`,
+			[userId, id]
 		);
 	}
 

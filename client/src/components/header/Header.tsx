@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../redux/slices/auth.ts";
-import { AppDispatch } from "../../redux/store.ts";
+import { IsAuth, logout } from "../../redux/slices/auth.ts";
+import { AppDispatch, RootState } from "../../redux/store.ts";
 import styles from "./Header.module.css";
 
 type Props = {
@@ -11,16 +11,21 @@ type Props = {
 
 export const Header = ({ userName, userSurname }: Props) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
+	const role = useSelector((state: RootState) => state.auth.role);
+	const isAuth = useSelector(IsAuth);
 
 	const onClickLogout = async () => {
 		dispatch(logout());
-		window.location.pathname = "/";
+		window.location.reload();
 	};
 
 	return (
 		<div className={styles.header}>
 			<div className={styles.topHeader}>
-				<div className={styles.logo} onClick={() => window.location.reload()}>
+				<div
+					className={styles.logo}
+					onClick={() => (window.location.pathname = "/")}
+				>
 					<h1>JobFinder</h1>
 				</div>
 				<div className={styles.rightBlock}>
@@ -31,16 +36,33 @@ export const Header = ({ userName, userSurname }: Props) => {
 						>
 							Знайти вакансії
 						</Link>
-						<Link
-							className={
-								window.location.pathname === "/resume/create"
-									? styles.active
-									: ""
-							}
-							to='/resume/create'
-						>
-							Розмістити резюме
-						</Link>
+						{isAuth ? (
+							role === "finder" ? (
+								<Link
+									className={
+										window.location.pathname === "/resume/create"
+											? styles.active
+											: ""
+									}
+									to='/resume/create'
+								>
+									Розмістити резюме
+								</Link>
+							) : (
+								<Link
+									className={
+										window.location.pathname === "/resume/create"
+											? styles.active
+											: ""
+									}
+									to='/post/create'
+								>
+									Створити ваканію
+								</Link>
+							)
+						) : (
+							""
+						)}
 						{userName && (
 							<Link
 								className={

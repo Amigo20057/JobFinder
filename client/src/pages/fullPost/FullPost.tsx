@@ -41,6 +41,7 @@ export const FullPost = () => {
 				workFormat={(post as IPostWithRecruiter).work_format}
 				experience={post.experience}
 				language={post.language}
+				isSaved={post.isSaved}
 				tags={post.tags}
 				createdAt={post.created_at}
 				isFullPost={true}
