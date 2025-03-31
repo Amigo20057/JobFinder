@@ -212,9 +212,19 @@ router.delete(
 	"/remove/saved-post/:postId",
 	AuthCheck,
 	async (req: Request, res: Response) => {
-		const userId = req.id;
-		const postId = parseInt(req.params.postId);
-		await postService.removeSavedPost(userId!, postId);
+		try {
+			const userId = req.id;
+			const postId = parseInt(req.params.postId);
+			await postService.removeSavedPost(userId!, postId);
+			res.status(200).json({ successfully: true });
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				res.status(500).json({ error: error.message });
+			} else {
+				logger.error("An unknown error occurred");
+				res.status(500).json({ error: "Internal server Error" });
+			}
+		}
 	}
 );
 

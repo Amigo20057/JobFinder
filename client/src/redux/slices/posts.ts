@@ -36,10 +36,21 @@ export const createPost = createAsyncThunk(
 	}
 );
 
-export const savePost = createAsyncThunk(
-	"post/savePost",
+export const fetchSavePost = createAsyncThunk(
+	"posts/savePost",
 	async (postId: number) => {
 		await axios.post(`/posts/save-post/${postId}`, {
+			headers: {
+				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+			},
+		});
+	}
+);
+
+export const fetchRemoveSavedPost = createAsyncThunk(
+	"posts/removeSavedPost",
+	async (postId: number) => {
+		await axios.delete(`posts/remove/saved-post/${postId}`, {
 			headers: {
 				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
 			},
@@ -97,7 +108,11 @@ const postsSlice = createSlice({
 				state.posts.status = "error";
 			})
 
-			.addCase(savePost.fulfilled, (state, action) => {
+			.addCase(fetchSavePost.fulfilled, (state, action) => {
+				state.posts.status = "loaded";
+			})
+
+			.addCase(fetchRemoveSavedPost.fulfilled, (state, action) => {
 				state.posts.status = "loaded";
 			});
 	},

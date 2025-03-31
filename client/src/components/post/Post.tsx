@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { savePost } from "../../redux/slices/posts";
+import { fetchRemoveSavedPost, fetchSavePost } from "../../redux/slices/posts";
 import { AppDispatch } from "../../redux/store";
 import styles from "./Post.module.css";
 
@@ -46,14 +46,37 @@ export const Post = ({
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
 	const [savePostLocal, setSavePostLocal] = useState<boolean>(isSaved);
 
-	const savePostHandler = async () => {
+	const saveOrRemovePost = async () => {
 		try {
-			await dispatch(savePost(id));
-			setSavePostLocal(prev => !prev);
+			if (!isSaved) {
+				await dispatch(fetchSavePost(id));
+				setSavePostLocal(prev => !prev);
+			} else {
+				await dispatch(fetchRemoveSavedPost(id));
+				setSavePostLocal(prev => !prev);
+			}
 		} catch (error) {
-			console.error(error);
+			console.log(error);
 		}
 	};
+
+	// const savePostHandler = async () => {
+	// 	try {
+	// 		await dispatch(fetchSavePost(id));
+	// 		setSavePostLocal(prev => !prev);
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
+	// };
+
+	// const removeSavedPost = async () => {
+	// 	try {
+	// 		await dispatch(fetchRemoveSavedPost(id));
+	// 		setSavePostLocal(prev => !prev);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
 	const displayTags = () => {
 		return (
@@ -88,7 +111,7 @@ export const Post = ({
 							тому
 						</p>
 						{userRole === "finder" && (
-							<button onClick={savePostHandler}>
+							<button onClick={saveOrRemovePost}>
 								<Heart
 									style={{
 										color: savePostLocal ? "#ff0033" : "black",
@@ -108,7 +131,7 @@ export const Post = ({
 				<div className={styles.fullPost}>
 					<div className={styles.options}>
 						<button className={styles.respond}>Відгукнутися</button>
-						<button onClick={savePostHandler}>
+						<button onClick={saveOrRemovePost}>
 							<Heart
 								style={{
 									color: savePostLocal ? "#ff0033" : "black",
