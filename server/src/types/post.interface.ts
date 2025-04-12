@@ -5,7 +5,7 @@ export interface IPost {
 	experience: string;
 	language: string;
 	tags: string[];
-	isSaved: boolean;
+	isSaved?: boolean;
 	recruiterId: number;
-	createdAt: Date;
+	createdAt?: Date;
 }
