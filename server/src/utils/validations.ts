@@ -12,10 +12,14 @@ export const registerValidator = [
 	}),
 	body("userName", "Enter your name").isLength({ min: 3 }),
 	body("userSurname", "Enter your surname").isLength({ min: 3 }),
-	body("nameCompany", "Enter company name (if applicable)").isLength({
-		min: 3,
-	}),
-	body("addressCompany", "Enter company address (if applicable)").isString(),
+	body("nameCompany", "Enter company name (if applicable)")
+		.isLength({
+			min: 3,
+		})
+		.optional(),
+	body("addressCompany", "Enter company address (if applicable)")
+		.isString()
+		.optional(),
 ];
 
 export const postCreateValidation = [

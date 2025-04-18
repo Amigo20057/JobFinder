@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IsAuth, logout } from "../../redux/slices/auth.ts";
-import { AppDispatch, RootState } from "../../redux/store.ts";
+import { AppDispatch } from "../../redux/store.ts";
 import styles from "./Header.module.css";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 export const Header = ({ userName, userSurname }: Props) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
-	const role = useSelector((state: RootState) => state.auth.role);
+	const role = window.localStorage.getItem("role");
 	const isAuth = useSelector(IsAuth);
 
 	const onClickLogout = async () => {
@@ -51,7 +51,7 @@ export const Header = ({ userName, userSurname }: Props) => {
 							) : (
 								<Link
 									className={
-										window.location.pathname === "/resume/create"
+										window.location.pathname === "/post/create"
 											? styles.active
 											: ""
 									}

@@ -27,6 +27,18 @@ export const fetchPostsWithRecruiter = createAsyncThunk(
 	}
 );
 
+export const fetchSavedPosts = createAsyncThunk(
+	"posts/fetchSavedPosts",
+	async () => {
+		const { data } = await axios.get("/posts/saved-posts", {
+			headers: {
+				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+			},
+		});
+		return data;
+	}
+);
+
 export const createPost = createAsyncThunk(
 	"posts/createPost",
 	async (params: IPost) => {
@@ -114,6 +126,19 @@ const postsSlice = createSlice({
 
 			.addCase(fetchRemoveSavedPost.fulfilled, (state, action) => {
 				state.posts.status = "loaded";
+			})
+
+			.addCase(fetchSavedPosts.pending, state => {
+				state.posts.items = [];
+				state.posts.status = "loading";
+			})
+			.addCase(fetchSavedPosts.fulfilled, (state, action) => {
+				state.posts.items = action.payload;
+				state.posts.status = "loaded";
+			})
+			.addCase(fetchSavedPosts.rejected, state => {
+				state.posts.items = [];
+				state.posts.status = "error";
 			});
 	},
 });

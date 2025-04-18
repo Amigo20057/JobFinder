@@ -10,7 +10,7 @@ const router = Router();
 const userService = new UserService();
 const postService = new PostService(userService);
 
-router.get("/", AuthCheck, async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
 	try {
 		const userId = req.id;
 		const posts = await postService.findAllPosts(userId);

@@ -60,24 +60,6 @@ export const Post = ({
 		}
 	};
 
-	// const savePostHandler = async () => {
-	// 	try {
-	// 		await dispatch(fetchSavePost(id));
-	// 		setSavePostLocal(prev => !prev);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
-
-	// const removeSavedPost = async () => {
-	// 	try {
-	// 		await dispatch(fetchRemoveSavedPost(id));
-	// 		setSavePostLocal(prev => !prev);
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
 	const displayTags = () => {
 		return (
 			<div className={styles.tags}>
@@ -130,20 +112,24 @@ export const Post = ({
 			) : (
 				<div className={styles.fullPost}>
 					<div className={styles.options}>
-						<button className={styles.respond}>Відгукнутися</button>
-						<button onClick={saveOrRemovePost}>
-							<Heart
-								style={{
-									color: savePostLocal ? "#ff0033" : "black",
-									fill: savePostLocal ? "#ff0033" : "none",
-								}}
-							/>
-							{!savePostLocal ? (
-								<span style={{ marginLeft: "25px" }}>Зберегти</span>
-							) : (
-								<span style={{ marginLeft: "10px" }}>Збережено</span>
-							)}
-						</button>
+						{userRole === "finder" && (
+							<>
+								<button className={styles.respond}>Відгукнутися</button>
+								<button onClick={saveOrRemovePost}>
+									<Heart
+										style={{
+											color: savePostLocal ? "#ff0033" : "black",
+											fill: savePostLocal ? "#ff0033" : "none",
+										}}
+									/>
+									{!savePostLocal ? (
+										<span style={{ marginLeft: "25px" }}>Зберегти</span>
+									) : (
+										<span style={{ marginLeft: "10px" }}>Збережено</span>
+									)}
+								</button>
+							</>
+						)}
 					</div>
 					<div className={styles.createdAt}>
 						<p>Вакансія від 27 березня 2025</p>
@@ -172,7 +158,9 @@ export const Post = ({
 					{displayTags()}
 					<h1>Опис вакансії</h1>
 					<div className={styles.description}>{description}</div>
-					<button className={styles.respond}>Відгукнутися</button>
+					{userRole === "finder" && (
+						<button className={styles.respond}>Відгукнутися</button>
+					)}
 				</div>
 			)}
 		</>

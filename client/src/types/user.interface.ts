@@ -39,5 +39,5 @@ export interface IRecruiterResponse {
 	address_company: string;
 }
 
-export type IUsersResponse = IFinderResponse | IRecruiterResponse;
-export type IUsers = IFinder | IRecruiter;
+export type IUsersResponse = IFinderResponse & IRecruiterResponse;
+export type IUsers = IFinder | IRecruiter | null;

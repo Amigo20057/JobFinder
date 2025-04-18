@@ -15,7 +15,7 @@ export const FinderRegister = () => {
 	const onSubmit: SubmitHandler<IFinder> = async (params: IFinder) => {
 		const data = await dispatch(fetchFinderRegister(params));
 		if (!data.payload) {
-			return alert("Error register");
+			return alert("Error register finder");
 		}
 		console.log("DATA PAYLOAD: ", data.payload);
 	};

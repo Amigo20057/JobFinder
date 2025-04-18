@@ -1,12 +1,13 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import { Header } from "./components";
-import { useUserProfile } from "./hooks/useUserProfile.tsx";
-import { NotFound } from "./NotFound.tsx";
-import { FinderLogin, FinderRegister, Home } from "./pages";
-import { RecruiterLogin } from "./pages/auth/login/RecruiterLogin.tsx";
-import { RecruiterRegister } from "./pages/auth/register/RecruiterRegister.tsx";
-import { CreatePost } from "./pages/createPost/CreatePost.tsx";
-import { FullPost } from "./pages/fullPost/FullPost.tsx";
+import { Route, Routes, useLocation } from "react-router-dom"
+import { Header } from "./components"
+import { useUserProfile } from "./hooks/useUserProfile.tsx"
+import { NotFound } from "./NotFound.tsx"
+import { FinderLogin, FinderRegister, Home } from "./pages"
+import { RecruiterLogin } from "./pages/auth/login/RecruiterLogin.tsx"
+import { RecruiterRegister } from "./pages/auth/register/RecruiterRegister.tsx"
+import { CreatePost } from "./pages/createPost/CreatePost.tsx"
+import { FullPost } from "./pages/fullPost/FullPost.tsx"
+import { Profile } from "./pages/profile/Profile.tsx"
 
 function App() {
 	const location = useLocation();
@@ -40,6 +41,8 @@ function App() {
 				/>
 				<Route path='/auth/finder/login' element={<FinderLogin />} />
 				<Route path='/auth/recruiter/login' element={<RecruiterLogin />} />
+
+				<Route path='/profile' element={<Profile user={user!} />} />
 
 				<Route path='*' element={<NotFound />} />
 			</Routes>
