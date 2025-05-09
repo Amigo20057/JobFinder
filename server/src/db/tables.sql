@@ -5,8 +5,8 @@ CREATE TABLE finders
     user_surname VARCHAR(255) NOT NULL,
     email        VARCHAR(255) NOT NULL UNIQUE,
     password     VARCHAR(255) NOT NULL,
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE recruiters
@@ -18,8 +18,8 @@ CREATE TABLE recruiters
     password        VARCHAR(255) NOT NULL,
     name_company    VARCHAR(255),
     address_company VARCHAR(255),
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE posts
@@ -32,8 +32,8 @@ CREATE TABLE posts
     language     VARCHAR(255) NOT NULL,
     tags         VARCHAR(255),
     recruiter_id INT REFERENCES recruiters (id) ON DELETE CASCADE,
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE saved_posts
@@ -43,7 +43,6 @@ CREATE TABLE saved_posts
     post_id   INT REFERENCES posts (id) ON DELETE CASCADE
 );
 
--- Триггер для обновления updated_at
 CREATE
 OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$

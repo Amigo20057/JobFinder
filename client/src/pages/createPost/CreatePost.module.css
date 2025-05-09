@@ -3,11 +3,30 @@
 	margin: 0 auto;
 }
 
-.container {
+.createPost .container {
 	width: 100%;
 	max-width: 800px;
 	background: #fff;
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.createPost .inputs {
+	display: flex;
+	flex-direction: column;
+}
+
+.createPost .inputs input {
+	width: 100%;
+	margin: 0 auto;
+	margin-bottom: 40px;
+	padding: 8px 15px;
+	margin-bottom: 20px;
+	height: 30px;
+	border-radius: 10px;
+	font-size: 14px;
+	outline: none;
+	color: #1f2c47;
+	border: 1px solid #adb8cc;
 }

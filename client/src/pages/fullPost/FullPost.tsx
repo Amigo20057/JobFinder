@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Post } from "../../components/post/Post.tsx";
+import { Spinner } from "../../components/spinner/Spinner.tsx";
 import { fetchPostWithRecruiterById } from "../../redux/slices/posts.ts";
 import { AppDispatch, RootState } from "../../redux/store.ts";
 import { IPostWithRecruiter } from "../../types/post.interface.ts";
@@ -24,11 +25,11 @@ export const FullPost = () => {
 	console.log("FULL POST: ", post);
 
 	if (isLoading) {
-		return <h1>LOADING...</h1>;
+		return <Spinner />;
 	}
 
 	if (!post) {
-		return <h1>Post not found</h1>;
+		return <h1 style={{ textAlign: "center" }}>Post not found</h1>;
 	}
 
 	return (

@@ -61,6 +61,7 @@ router.get("/email/:email", async (req: Request, res: Response) => {
 router.post(
 	"/create",
 	postCreateValidation,
+	AuthCheck,
 	async (req: Request, res: Response) => {
 		try {
 			const errors = validationResult(req);
@@ -68,7 +69,7 @@ router.post(
 				res.status(400).json({ errors: errors.array() });
 				return;
 			}
-			const post = await postService.create(req.body);
+			const post = await postService.create(req.body, req.id!);
 			res.status(200).json(post.rows[0]);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -116,6 +117,22 @@ router.delete("/:id", AuthCheck, async (req: Request, res: Response) => {
 		}
 		await postService.delete(id);
 		res.status(200).json({ successfully: true });
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			logger.error(error.message);
+			res.status(500).json({ error: error.message });
+		} else {
+			logger.error("An unknown error occurred");
+			res.status(500).json({ error: "Internal Server Error" });
+		}
+	}
+});
+
+router.get("/created-posts", AuthCheck, async (req: Request, res: Response) => {
+	try {
+		console.log("recruiter id: ", req.id);
+		const posts = await postService.findPostsByRecruiterId(req.id!);
+		res.status(200).json(posts.rows);
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			logger.error(error.message);

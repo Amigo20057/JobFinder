@@ -24,6 +24,13 @@ export class PostService {
 		]);
 	}
 
+	public async findPostsByRecruiterId(id: number) {
+		return await this.pool.query(
+			"SELECT * FROM public.posts WHERE recruiter_id = $1",
+			[id]
+		);
+	}
+
 	public async findPostsByEmail(email: string) {
 		const user = await this.userService.findRecruiterByEmail(email);
 		console.log(user.rows[0]);
@@ -40,9 +47,10 @@ export class PostService {
 		return posts;
 	}
 
-	public async create(dto: IPost) {
+	public async create(dto: IPost, recruiterId: number) {
+		console.log(`id: ${recruiterId}`);
 		return await this.pool.query(
-			"INSERT INTO public.posts(title, description, work_format, experience, language, tags, recruiter_id) VALUES($1, $2, $3, $4, $5 ,$6::TEXT[], $7) RETURNING *",
+			"INSERT INTO public.posts(title, description, work_format, experience, language, tags, recruiter_id) VALUES($1, $2, $3, $4, $5 ,$6, $7) RETURNING *",
 			[
 				dto.title,
 				dto.description,
@@ -50,7 +58,7 @@ export class PostService {
 				dto.experience,
 				dto.language,
 				dto.tags,
-				dto.recruiterId,
+				recruiterId,
 			]
 		);
 	}

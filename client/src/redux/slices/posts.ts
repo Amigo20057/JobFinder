@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios";
-import { IPost } from "../../types/post.interface.ts";
+import { IPostResponse } from "../../types/post.interface.ts";
 import { InitialStatePosts } from "../../types/redux.interface.ts";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
@@ -41,8 +41,12 @@ export const fetchSavedPosts = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
 	"posts/createPost",
-	async (params: IPost) => {
-		const { data } = await axios.post("/posts/create", params);
+	async (params: IPostResponse) => {
+		const { data } = await axios.post("/posts/create", params, {
+			headers: {
+				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+			},
+		});
 		console.log("DATA CREATED POST", data);
 		return data;
 	}
@@ -67,6 +71,18 @@ export const fetchRemoveSavedPost = createAsyncThunk(
 				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
 			},
 		});
+	}
+);
+
+export const fetchCreatedPosts = createAsyncThunk(
+	"posts/fetchCreatedPosts",
+	async () => {
+		const { data } = await axios.get("posts/created-posts", {
+			headers: {
+				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+			},
+		});
+		return data;
 	}
 );
 
@@ -137,6 +153,19 @@ const postsSlice = createSlice({
 				state.posts.status = "loaded";
 			})
 			.addCase(fetchSavedPosts.rejected, state => {
+				state.posts.items = [];
+				state.posts.status = "error";
+			})
+
+			.addCase(fetchCreatedPosts.pending, state => {
+				state.posts.items = [];
+				state.posts.status = "loading";
+			})
+			.addCase(fetchCreatedPosts.fulfilled, (state, action) => {
+				state.posts.items = action.payload;
+				state.posts.status = "loaded";
+			})
+			.addCase(fetchCreatedPosts.rejected, state => {
 				state.posts.items = [];
 				state.posts.status = "error";
 			});

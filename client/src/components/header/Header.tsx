@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IsAuth, logout } from "../../redux/slices/auth.ts";
@@ -7,16 +8,22 @@ import styles from "./Header.module.css";
 type Props = {
 	userName?: string;
 	userSurname?: string;
+	setFilterPostName: (postName: string) => void;
 };
 
-export const Header = ({ userName, userSurname }: Props) => {
+export const Header = ({ userName, userSurname, setFilterPostName }: Props) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
 	const role = window.localStorage.getItem("role");
 	const isAuth = useSelector(IsAuth);
+	const [searchText, setSearchText] = useState<string>("");
 
 	const onClickLogout = async () => {
 		dispatch(logout());
-		window.location.reload();
+		window.location.href = "/";
+	};
+
+	const handleSearch = () => {
+		setFilterPostName(searchText);
 	};
 
 	return (
@@ -84,8 +91,12 @@ export const Header = ({ userName, userSurname }: Props) => {
 				</div>
 			</div>
 			<div className={styles.bottomHeader}>
-				<input type='text' placeholder='Посада або компанія' />
-				<button>Знайти вакансії</button>
+				<input
+					type='text'
+					placeholder='Посада або компанія'
+					onChange={e => setSearchText(e.target.value)}
+				/>
+				<button onClick={handleSearch}>Знайти вакансії</button>
 			</div>
 		</div>
 	);

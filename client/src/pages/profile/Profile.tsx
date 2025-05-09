@@ -1,12 +1,14 @@
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Post } from "../../components/post/Post";
-import { fetchSavedPosts } from "../../redux/slices/posts";
-import { AppDispatch } from "../../redux/store";
-import { IPost, IPostWithRecruiter } from "../../types/post.interface";
-import { IUsersResponse } from "../../types/user.interface";
-import { ProfileInfo } from "./ProfileInfo";
+import { unwrapResult } from "@reduxjs/toolkit"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Navigate } from 'react-router-dom'
+import { Post } from "../../components/post/Post"
+import { IsAuth } from '../../redux/slices/auth'
+import { fetchCreatedPosts, fetchSavedPosts } from "../../redux/slices/posts"
+import { AppDispatch } from "../../redux/store"
+import { IPost, IPostWithRecruiter } from "../../types/post.interface"
+import { IUsersResponse } from "../../types/user.interface"
+import { ProfileInfo } from "./ProfileInfo"
 
 type Props = {
 	user: IUsersResponse;
@@ -17,6 +19,11 @@ export const Profile = ({ user }: Props) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
 	const role = window.localStorage.getItem("role");
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const isAuth = useSelector(IsAuth);
+
+	if(!isAuth){
+		return <Navigate to="/" />
+	}
 
 	useEffect(() => {
 		const getCreatedOrSavedPosts = async () => {
@@ -25,6 +32,8 @@ export const Profile = ({ user }: Props) => {
 				if (role === "finder") {
 					response = await dispatch(fetchSavedPosts());
 				} else if (role === "recruiter") {
+					response = await dispatch(fetchCreatedPosts());
+					console.log(response);
 				}
 				const data = unwrapResult(response!);
 				setPosts(data);

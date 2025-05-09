@@ -31,6 +31,5 @@ export const postCreateValidation = [
 	body("workFormat", "Enter a valid text").isString(),
 	body("experience", "Enter a valid text").isString(),
 	body("language", "Enter a valid language").isString(),
-	body("tags", "Tags must be an array").isArray(),
-	body("recruiterId", "Recruiter ID must be an integer").isInt(),
+	body("tags", "Tags must be an array").isString(),
 ];

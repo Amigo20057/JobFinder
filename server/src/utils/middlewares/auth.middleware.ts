@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { ConfigService } from "../../config/config.service";
-import { DecodedToken } from "../../types/token.types";
+import { NextFunction, Request, Response } from "express"
+import jwt from "jsonwebtoken"
+import { ConfigService } from "../../config/config.service"
+import { DecodedToken } from "../../types/token.types"
 
 const config = new ConfigService();
 
@@ -26,6 +26,5 @@ export const AuthCheck = (
 		}
 	}
 
-	// Если токен отсутствует, пропускаем мидлвар
 	next();
 };
