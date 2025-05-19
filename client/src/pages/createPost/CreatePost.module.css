@@ -1,6 +1,7 @@
 .createPost {
 	width: 700px;
 	margin: 0 auto;
+	margin-bottom: 100px;
 }
 
 .createPost .container {
@@ -29,4 +30,19 @@
 	outline: none;
 	color: #1f2c47;
 	border: 1px solid #adb8cc;
+}
+
+.createPost form .send {
+	width: 200px;
+	height: 50px;
+	background-color: #d41a5d;
+	color: #fff;
+	border-radius: 10px;
+	border: none;
+	font-size: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 10px;
 }

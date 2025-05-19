@@ -13,7 +13,6 @@ export const fetchFinderRegister = createAsyncThunk(
 	"auth/fetchFinderRegister",
 	async (params: IFinder) => {
 		const { data } = await axios.post("/auth/finder/register", params);
-		console.log("DATA REGISTER FINDER: ", data);
 		return { user: data.user, token: data.user.token, role: "finder" };
 	}
 );
@@ -22,7 +21,6 @@ export const fetchRecruiterRegister = createAsyncThunk(
 	"auth/fetchRecruiterRegister",
 	async (params: IRecruiter) => {
 		const { data } = await axios.post("/auth/recruiter/register", params);
-		console.log("DATA REGISTER RECRUITER: ", data);
 		return { user: data.user, token: data.user.token, role: "recruiter" };
 	}
 );
@@ -31,7 +29,6 @@ export const fetchFinderLogin = createAsyncThunk(
 	"auth/fetchFinderLogin",
 	async (params: IUserLogin) => {
 		const { data } = await axios.post("/auth/finder/login", params);
-		console.log("DATA LOGIN FINDER: ", data);
 		return { user: data.user, token: data.user.token, role: "finder" };
 	}
 );
@@ -40,7 +37,6 @@ export const fetchRecruiterLogin = createAsyncThunk(
 	"auth/fetchRecruiterLogin",
 	async (params: IUserLogin) => {
 		const { data } = await axios.post("/auth/recruiter/login", params);
-		console.log("DATA LOGIN RECRUITER", data);
 		return { user: data.user, token: data.user.token, role: "recruiter" };
 	}
 );

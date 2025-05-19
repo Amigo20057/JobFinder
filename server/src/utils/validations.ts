@@ -32,4 +32,5 @@ export const postCreateValidation = [
 	body("experience", "Enter a valid text").isString(),
 	body("language", "Enter a valid language").isString(),
 	body("tags", "Tags must be an array").isString(),
+	body("aboutCompany", "Enter a valid text").isLength({ min: 10 }).isString(),
 ];

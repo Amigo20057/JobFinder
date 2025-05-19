@@ -53,6 +53,7 @@ export const Home = ({ filterPostName }: Props) => {
 							createdAt={post.created_at}
 							nameCompany={post.name_company!}
 							isFullPost={false}
+							about_company={post.about_company}
 						/>
 					))
 				) : (

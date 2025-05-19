@@ -18,7 +18,6 @@ export const useUserProfile = () => {
 
 	useEffect(() => {
 		if (!role) {
-			console.log("No role found, skipping fetch");
 			setIsLoading(false);
 			return;
 		}
@@ -31,12 +30,10 @@ export const useUserProfile = () => {
 				} else if (role === "recruiter") {
 					response = await dispatch(fetchRecruiterProfile());
 				}
-				console.log("PROFILE RESPONSE: ", response);
 
 				const data = unwrapResult(response!);
 				setUser(data);
 			} catch (error) {
-				console.log("Error fetching profile:", error);
 				setUser(null);
 			} finally {
 				setIsLoading(false);

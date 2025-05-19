@@ -52,6 +52,17 @@
 	font-size: 18px;
 }
 
+.description ul {
+	margin-left: 15px;
+}
+.description ul li {
+	margin-top: 10px;
+	margin-left: 15px;
+}
+.description p {
+	margin-bottom: 10px;
+}
+
 .post .options {
 	display: flex;
 	justify-content: space-between;

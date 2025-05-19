@@ -45,16 +45,17 @@ export const Header = ({ userName, userSurname, setFilterPostName }: Props) => {
 						</Link>
 						{isAuth ? (
 							role === "finder" ? (
-								<Link
-									className={
-										window.location.pathname === "/resume/create"
-											? styles.active
-											: ""
-									}
-									to='/resume/create'
-								>
-									Розмістити резюме
-								</Link>
+								// <Link
+								// 	className={
+								// 		window.location.pathname === "/resume/create"
+								// 			? styles.active
+								// 			: ""
+								// 	}
+								// 	to='/resume/create'
+								// >
+								// 	Розмістити резюме
+								// </Link>
+								""
 							) : (
 								<Link
 									className={

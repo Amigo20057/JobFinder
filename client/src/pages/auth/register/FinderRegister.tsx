@@ -17,7 +17,6 @@ export const FinderRegister = () => {
 		if (!data.payload) {
 			return alert("Error register finder");
 		}
-		console.log("DATA PAYLOAD: ", data.payload);
 	};
 
 	if (isAuth) {

@@ -2,12 +2,14 @@ import MDEditor from "@uiw/react-md-editor";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createPost } from "../../redux/slices/posts";
 import { AppDispatch } from "../../redux/store";
 import { IPostResponse } from "../../types/post.interface";
 import styles from "./CreatePost.module.css";
 
 export const CreatePost = () => {
+	const navigate = useNavigate();
 	const [value, setValue] = useState("");
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
 	const { register, handleSubmit } = useForm<IPostResponse>();
@@ -32,7 +34,7 @@ export const CreatePost = () => {
 		if (!data.payload) {
 			return alert("Error creating post");
 		}
-		console.log("DATA PAYLOAD: ", data.payload);
+		navigate("/");
 	};
 
 	return (
@@ -75,6 +77,12 @@ export const CreatePost = () => {
 							id='tags'
 							placeholder='React, TypeScript, Remote'
 						/>
+
+						<label htmlFor='about_company'>Про компанію</label>
+						<textarea
+							{...register("aboutCompany", { required: true })}
+							id='about_company'
+						/>
 					</div>
 
 					<label style={{ marginTop: 16, display: "block" }}>
@@ -84,7 +92,9 @@ export const CreatePost = () => {
 						<MDEditor value={value} onChange={val => setValue(val || "")} />
 					</div>
 
-					<button type='submit'>Створити</button>
+					<button className={styles.send} type='submit'>
+						Створити
+					</button>
 				</form>
 			</div>
 		</div>

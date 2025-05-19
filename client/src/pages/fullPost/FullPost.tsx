@@ -22,8 +22,6 @@ export const FullPost = () => {
 		}
 	}, [id, dispatch]);
 
-	console.log("FULL POST: ", post);
-
 	if (isLoading) {
 		return <Spinner />;
 	}
@@ -46,6 +44,7 @@ export const FullPost = () => {
 				tags={post.tags}
 				createdAt={post.created_at}
 				isFullPost={true}
+				about_company={post.about_company}
 			/>
 		</div>
 	);

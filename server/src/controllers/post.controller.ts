@@ -130,7 +130,6 @@ router.delete("/:id", AuthCheck, async (req: Request, res: Response) => {
 
 router.get("/created-posts", AuthCheck, async (req: Request, res: Response) => {
 	try {
-		console.log("recruiter id: ", req.id);
 		const posts = await postService.findPostsByRecruiterId(req.id!);
 		res.status(200).json(posts.rows);
 	} catch (error: unknown) {

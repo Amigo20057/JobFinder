@@ -1,0 +1,38 @@
+.respond {
+	width: 700px;
+	margin: 0 auto;
+	margin-bottom: 100px;
+}
+
+.respond .container {
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	box-shadow: 0 5px 5px 0 rgba(31, 44, 71, 0.05);
+	padding: 10px;
+}
+
+.respond form {
+	display: flex;
+	flex-direction: column;
+}
+
+.respond form textarea {
+	margin-top: 10px;
+	min-height: 300px;
+}
+
+.respond form button {
+	width: 100px;
+	height: 25px;
+	background-color: #d41a5d;
+	color: #fff;
+	border-radius: 7px;
+	border: none;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 10px;
+}

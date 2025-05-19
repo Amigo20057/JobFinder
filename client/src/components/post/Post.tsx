@@ -9,23 +9,29 @@ import {
 	MapPin,
 } from "lucide-react";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchRemoveSavedPost, fetchSavePost } from "../../redux/slices/posts";
 import { AppDispatch } from "../../redux/store";
+import { TTags } from "../../types/post.interface";
+
 import styles from "./Post.module.css";
 
 type Props = {
 	id: number;
 	title: string;
 	description: string;
+	about_company: string;
 	nameCompany: string;
 	workFormat: string;
 	experience: string;
 	language: string;
-	tags: string;
+	tags: TTags;
 	isSaved: boolean;
 	createdAt: string;
 	isFullPost: boolean;
+	isProfile?: boolean;
 };
 
 export const Post = ({
@@ -40,10 +46,13 @@ export const Post = ({
 	createdAt,
 	nameCompany,
 	isFullPost,
+	about_company,
+	isProfile = false,
 }: Props) => {
 	const userRole = window.localStorage.getItem("role");
 	const formattedTags = tags.replace(/[{}]/g, "").split(",");
 	const dispatch: AppDispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
 	const [savePostLocal, setSavePostLocal] = useState<boolean>(isSaved);
 
 	const saveOrRemovePost = async () => {
@@ -55,9 +64,7 @@ export const Post = ({
 				await dispatch(fetchRemoveSavedPost(id));
 				setSavePostLocal(prev => !prev);
 			}
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	};
 
 	const displayTags = () => {
@@ -84,7 +91,7 @@ export const Post = ({
 						<span style={{ fontWeight: "600" }}>{nameCompany} </span>
 						{workFormat}
 					</p>
-					<p className={styles.description}>{description}</p>
+					<p className={styles.description}>{about_company}</p>
 					<div className={styles.options}>
 						<p>
 							{formatDistanceStrict(new Date(createdAt), new Date(), {
@@ -107,6 +114,13 @@ export const Post = ({
 								)}
 							</button>
 						)}
+						{isProfile && userRole === "recruiter" ? (
+							<Link to={`/profile/reviews/${id}`}>
+								<button>Відгуки</button>
+							</Link>
+						) : (
+							""
+						)}
 					</div>
 				</div>
 			) : (
@@ -114,7 +128,14 @@ export const Post = ({
 					<div className={styles.options}>
 						{userRole === "finder" && (
 							<>
-								<button className={styles.respond}>Відгукнутися</button>
+								<button
+									onClick={() => {
+										navigate(`/respond/${id}`);
+									}}
+									className={styles.respond}
+								>
+									Відгукнутися
+								</button>
 								<button onClick={saveOrRemovePost}>
 									<Heart
 										style={{
@@ -156,8 +177,12 @@ export const Post = ({
 						{language}
 					</p>
 					{displayTags()}
+					<h1>Про компанію</h1>
+					<div className={styles.description}>{about_company}</div>
 					<h1>Опис вакансії</h1>
-					<div className={styles.description}>{description}</div>
+					<ReactMarkdown className={styles.description}>
+						{description}
+					</ReactMarkdown>
 					{userRole === "finder" && (
 						<button className={styles.respond}>Відгукнутися</button>
 					)}

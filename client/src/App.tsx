@@ -3,20 +3,21 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import { useUserProfile } from "./hooks/useUserProfile.tsx";
 import { NotFound } from "./NotFound.tsx";
-import { FinderLogin, FinderRegister, Home } from "./pages";
+import { FinderLogin } from "./pages/auth/login/FinderLogin.tsx";
 import { RecruiterLogin } from "./pages/auth/login/RecruiterLogin.tsx";
+import { FinderRegister } from "./pages/auth/register/FinderRegister.tsx";
 import { RecruiterRegister } from "./pages/auth/register/RecruiterRegister.tsx";
 import { CreatePost } from "./pages/createPost/CreatePost.tsx";
+import { CreateReview } from "./pages/createReview/CreateReview.tsx";
 import { FullPost } from "./pages/fullPost/FullPost.tsx";
+import { Home } from "./pages/home/Home.tsx";
 import { Profile } from "./pages/profile/Profile.tsx";
+import { Reviews } from "./pages/reviews/Reviews.tsx";
 
 function App() {
 	const location = useLocation();
 	const { user, isAuth } = useUserProfile();
 	const [filterPostName, setFilterPostName] = useState<string>("");
-
-	console.log("IS AUTH: ", isAuth);
-	console.log("USER: ", user);
 
 	const noHeaderRoutes = [
 		"/auth/finder/register",
@@ -49,6 +50,8 @@ function App() {
 				<Route path='/auth/recruiter/login' element={<RecruiterLogin />} />
 
 				<Route path='/profile' element={<Profile user={user!} />} />
+				<Route path='/profile/reviews/:postId' element={<Reviews />} />
+				<Route path='/respond/:id' element={<CreateReview />} />
 
 				<Route path='*' element={<NotFound />} />
 			</Routes>

@@ -1,10 +1,13 @@
+export type TTags = string & string[];
+
 export interface IPost {
 	id: number;
 	title: string;
 	description: string;
+	about_company: string;
 	experience: string;
 	language: string;
-	tags: string | string[];
+	tags: TTags;
 	isSaved: boolean;
 	created_at: string;
 	recruiter_id: number;
@@ -16,6 +19,7 @@ export interface IPost {
 export interface IPostResponse {
 	title: string;
 	description: string;
+	aboutCompany: string;
 	experience: string;
 	language: string;
 	tags: string | string[];

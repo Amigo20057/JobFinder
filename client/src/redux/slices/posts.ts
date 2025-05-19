@@ -5,7 +5,6 @@ import { InitialStatePosts } from "../../types/redux.interface.ts";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 	const { data } = await axios.get("/posts/");
-	console.log("DATA FETCH POSTS: ", data);
 	return data;
 });
 
@@ -13,7 +12,6 @@ export const fetchPostWithRecruiterById = createAsyncThunk(
 	"posts/fetchPostsWithRecruiterById",
 	async (id: number) => {
 		const { data } = await axios.get(`/posts/post-with-recruiter/${id}`);
-		console.log("DATA FETCH POST WITH RECRUITER BY ID: ", data);
 		return data;
 	}
 );
@@ -22,7 +20,6 @@ export const fetchPostsWithRecruiter = createAsyncThunk(
 	"posts/fetchPostsWithRecruiter",
 	async () => {
 		const { data } = await axios.get("/posts/posts-with-recruiter");
-		console.log("DATA FETCH POST WITH RECRUITER", data);
 		return data;
 	}
 );
@@ -47,7 +44,6 @@ export const createPost = createAsyncThunk(
 				Authorization: `Bearer ${window.localStorage.getItem("token")}`,
 			},
 		});
-		console.log("DATA CREATED POST", data);
 		return data;
 	}
 );

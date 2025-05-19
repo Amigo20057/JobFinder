@@ -17,7 +17,6 @@ export const RecruiterLogin = () => {
 		if (!data.payload) {
 			return alert("Error login");
 		}
-		console.log("DATA PAYLOAD: ", data.payload);
 	};
 
 	if (isAuth) {

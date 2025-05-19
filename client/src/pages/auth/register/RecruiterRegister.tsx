@@ -17,7 +17,6 @@ export const RecruiterRegister = () => {
 		if (!data.payload) {
 			return alert("Error register");
 		}
-		console.log("DATA PAYLOAD: ", data.payload);
 	};
 
 	if (isAuth) {

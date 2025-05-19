@@ -33,7 +33,6 @@ export class PostService {
 
 	public async findPostsByEmail(email: string) {
 		const user = await this.userService.findRecruiterByEmail(email);
-		console.log(user.rows[0]);
 		if (user.rowCount === 0) {
 			throw new Error("User not found");
 		}
@@ -48,9 +47,8 @@ export class PostService {
 	}
 
 	public async create(dto: IPost, recruiterId: number) {
-		console.log(`id: ${recruiterId}`);
 		return await this.pool.query(
-			"INSERT INTO public.posts(title, description, work_format, experience, language, tags, recruiter_id) VALUES($1, $2, $3, $4, $5 ,$6, $7) RETURNING *",
+			"INSERT INTO public.posts(title, description, work_format, experience, language, tags, recruiter_id, about_company) VALUES($1, $2, $3, $4, $5 ,$6, $7, $8) RETURNING *",
 			[
 				dto.title,
 				dto.description,
@@ -59,6 +57,7 @@ export class PostService {
 				dto.language,
 				dto.tags,
 				recruiterId,
+				dto.aboutCompany,
 			]
 		);
 	}

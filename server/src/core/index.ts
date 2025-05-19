@@ -5,6 +5,7 @@ import helmet from "helmet";
 import { ConfigService } from "../config/config.service";
 import { AuthRouter } from "../controllers/auth.controller";
 import { PostRouter } from "../controllers/post.controller";
+import { ReviewRouter } from "../controllers/review.controller";
 import { UserRouter } from "../controllers/user.controller";
 import { logger } from "../utils/log";
 
@@ -26,6 +27,7 @@ export class Application {
 		app.use("/auth", AuthRouter);
 		app.use("/users", UserRouter);
 		app.use("/posts", PostRouter);
+		app.use("/reviews", ReviewRouter);
 
 		app.all("*", (req: Request, res: Response) => {
 			res.status(404).json({ message: "Not found" });

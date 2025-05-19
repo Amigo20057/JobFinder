@@ -1,14 +1,14 @@
-import { unwrapResult } from "@reduxjs/toolkit"
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Navigate } from 'react-router-dom'
-import { Post } from "../../components/post/Post"
-import { IsAuth } from '../../redux/slices/auth'
-import { fetchCreatedPosts, fetchSavedPosts } from "../../redux/slices/posts"
-import { AppDispatch } from "../../redux/store"
-import { IPost, IPostWithRecruiter } from "../../types/post.interface"
-import { IUsersResponse } from "../../types/user.interface"
-import { ProfileInfo } from "./ProfileInfo"
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { Post } from "../../components/post/Post";
+import { IsAuth } from "../../redux/slices/auth";
+import { fetchCreatedPosts, fetchSavedPosts } from "../../redux/slices/posts";
+import { AppDispatch } from "../../redux/store";
+import { IPost, IPostWithRecruiter } from "../../types/post.interface";
+import { IUsersResponse } from "../../types/user.interface";
+import { ProfileInfo } from "./ProfileInfo";
 
 type Props = {
 	user: IUsersResponse;
@@ -21,8 +21,8 @@ export const Profile = ({ user }: Props) => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const isAuth = useSelector(IsAuth);
 
-	if(!isAuth){
-		return <Navigate to="/" />
+	if (!isAuth) {
+		return <Navigate to='/' />;
 	}
 
 	useEffect(() => {
@@ -33,12 +33,10 @@ export const Profile = ({ user }: Props) => {
 					response = await dispatch(fetchSavedPosts());
 				} else if (role === "recruiter") {
 					response = await dispatch(fetchCreatedPosts());
-					console.log(response);
 				}
 				const data = unwrapResult(response!);
 				setPosts(data);
 			} catch (error) {
-				console.log("Error get created posts or get saved posts", error);
 				setPosts(null);
 			} finally {
 				setIsLoading(false);
@@ -52,11 +50,18 @@ export const Profile = ({ user }: Props) => {
 		return <div>...loading</div>;
 	}
 
-	console.log("POSTS:", posts);
+	if (!user) {
+		return <div>...loading</div>;
+	}
 
 	return (
-		<>
-			<h1>Інформація про користувача</h1>
+		<div
+			style={{
+				display: "flex",
+				alignItems: "center",
+				flexDirection: "column",
+			}}
+		>
 			<ProfileInfo
 				user_name={user.user_name}
 				user_surname={user.user_surname}
@@ -87,11 +92,13 @@ export const Profile = ({ user }: Props) => {
 						createdAt={post.created_at}
 						nameCompany={(post as IPostWithRecruiter).name_company}
 						isFullPost={false}
+						about_company={post.about_company}
+						isProfile={true}
 					/>
 				))
 			) : (
 				<p>error</p>
 			)}
-		</>
+		</div>
 	);
 };

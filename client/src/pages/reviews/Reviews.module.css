@@ -1,0 +1,34 @@
+.reviewsContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+}
+
+.review {
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 16px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	transition: background-color 0.2s ease;
+
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.review:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.review p {
+	margin: 6px 0;
+	font-size: 16px;
+	color: #333;
+}
+
+.review p:first-child {
+	font-weight: bold;
+	color: #007bff;
+}
