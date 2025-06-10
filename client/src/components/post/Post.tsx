@@ -184,7 +184,14 @@ export const Post = ({
 						{description}
 					</ReactMarkdown>
 					{userRole === "finder" && (
-						<button className={styles.respond}>Відгукнутися</button>
+						<button
+							onClick={() => {
+								navigate(`/respond/${id}`);
+							}}
+							className={styles.respond}
+						>
+							Відгукнутися
+						</button>
 					)}
 				</div>
 			)}

@@ -1,10 +1,10 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { ConfigService } from "../config/config.service";
-import pool from "../db/pool";
-import { IPost } from "../types/post.interface";
-import { IRegister } from "../types/register.interface";
-import { DecodedToken } from "../types/token.types";
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import { ConfigService } from "../config/config.service"
+import pool from "../db/pool"
+import { IPost } from "../types/post.interface"
+import { IRegister } from "../types/register.interface"
+import { DecodedToken } from "../types/token.types"
 
 const config = new ConfigService();
 const testPassword = "12345";
@@ -25,6 +25,7 @@ const post: IPost = {
 	workFormat: "testWorkFormat",
 	experience: "testExperience",
 	language: "testLanguage",
+	aboutCompany: "testABoutCompany",
 	tags: ["testTag1", "testTag2", "testTag3"],
 	recruiterId: 0,
 };
